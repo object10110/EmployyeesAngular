@@ -1,0 +1,8 @@
+*/bin/
+*/obj/
+*.svclog
+.vs/
+Employees/bin/
+Employees/obj/
+Employees/bin/*
+Employees/obj/*
