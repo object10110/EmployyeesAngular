@@ -2,50 +2,84 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Employees.Data;
 using Employees.Data.Models;
 using Employees.Repositories;
-using Microsoft.AspNetCore.Cors;
+using Employees.ModelsDTO;
+using AutoMapper;
 
 namespace Employees.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("AllowAllOrigin")]
     public class EmployeePositionsController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly EmployeePositionsRepository _employeePositionsRepository;
+        private readonly PositionRepository _positionRepository;
+        private readonly EmployeesRepository _employeesRepository;
 
-        public EmployeePositionsController(EmployeePositionsRepository employeePositionsRepository)
+        public EmployeePositionsController(IMapper mapper, EmployeePositionsRepository employeePositionsRepository,
+            PositionRepository positionRepository, EmployeesRepository employeesRepository)
         {
+            _mapper = mapper;
             _employeePositionsRepository = employeePositionsRepository;
+            _positionRepository = positionRepository;
+            _employeesRepository = employeesRepository;
         }
 
         // GET: api/EmployeePositions
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EmployeePosition>>> GetEmployeePositions()
+        public async Task<ActionResult<IEnumerable<EmployeePosition>>> Get()
         {
             return await _employeePositionsRepository.GetAll();
         }
 
-/*        // POST: api/EmployeePositions
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        // POST: api/EmployeePositions
         [HttpPost]
-        public async Task<ActionResult<EmployeePosition>> PostEmployeePosition(EmployeePosition employeePosition)
+        public async Task<EmployeePositionDTO> Post(EmployeePositionDTO employeePosition)
         {
-            _context.EmployeePositions.Add(employeePosition);
-            await _context.SaveChangesAsync();
+            if (employeePosition != null)
+            {
+                if (IsValid(employeePosition))
+                {
+                    var finedPosition = await _positionRepository.Get(employeePosition.PositionId);
+                    if (finedPosition != null)
+                    {
+                        var finedEmployee = await _employeesRepository.GetBy(employeePosition.Name, employeePosition.Surname);
+                        if (finedEmployee == null)
+                        {
+                            finedEmployee = new Employee()
+                            {
+                                Name = employeePosition.Name,
+                                Surname = employeePosition.Surname
+                            };
+                            finedEmployee = await _employeesRepository.Add(finedEmployee);
+                        }
 
-            return CreatedAtAction("GetEmployeePosition", new { id = employeePosition.Id }, employeePosition);
+                        var newEmployeePosition = _mapper.Map<EmployeePosition>(employeePosition);
+
+                        newEmployeePosition.PositionId = finedPosition.Id;
+                        newEmployeePosition.Position = finedPosition;
+                        newEmployeePosition.EmployeeId = finedEmployee.Id;
+                        newEmployeePosition.Employee = finedEmployee;
+
+                        newEmployeePosition = await _employeePositionsRepository.Add(newEmployeePosition);
+
+                        employeePosition = _mapper.Map<EmployeePositionDTO>(newEmployeePosition);
+
+                        return employeePosition;
+                    }
+                }
+            }
+            Response.StatusCode = 400;
+            return null;
         }
 
-        private bool EmployeePositionExists(int id)
+        private bool IsValid(EmployeePositionDTO ep)
         {
-            return _context.EmployeePositions.Any(e => e.Id == id);
-        }*/
+            return ep.PositionId > 0 && ep.DateOfAppointment.HasValue && ep.Salary > 0
+                    && !string.IsNullOrWhiteSpace(ep.Name) && !string.IsNullOrWhiteSpace(ep.Surname);
+        }
     }
 }

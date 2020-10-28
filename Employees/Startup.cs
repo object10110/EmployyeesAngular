@@ -26,6 +26,7 @@ namespace Employees
         {
             services.AddScoped<PositionRepository>();
             services.AddScoped<EmployeePositionsRepository>();
+            services.AddScoped<EmployeesRepository>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

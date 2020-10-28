@@ -1,4 +1,4 @@
-<button class="btn btn-primary" data-toggle="modal" data-target="#addEmployeePositionModal">Добавить должность</button>
+<button class="btn btn-primary" data-toggle="modal" data-target="#addEmployeePositionModal">Добавить сотрудника</button>
 
 <!-- Modal -->
 <div class="modal show" id="addEmployeePositionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -13,10 +13,56 @@
       <div class="modal-body">
         <div class="row">
           <div class="col">
-            <input class="table-input form-control input" [(ngModel)]="position.name" />
+            <input class="table-input form-control input" [(ngModel)]="employeePosition.surname" />
           </div>
           <div class="col">
-            <label>Должность</label>
+            <label>Фамилия</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <input class="table-input form-control input" [(ngModel)]="employeePosition.name" />
+          </div>
+          <div class="col">
+            <label>Имя</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <select class="input-select form-control" [(ngModel)]="employeePosition.positionId">
+              <option *ngFor="let p of positions" [ngValue]="p.id">{{p.name}}</option>
+            </select>
+          </div>
+          <div class="col">
+            <label>Должнось</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <input class="table-input form-control input" type="number" [ngModel]="employeePosition.salary" (ngModelChange)="employeePosition.salary=$event" />
+          </div>
+          <div class="col">
+            <label>$ Оклад</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="input-group">
+              <input type="date" [(ngModel)]="employeePosition.dateOfAppointment" class="form-control">
+            </div>
+          </div>
+          <div class="col">
+            <label>Нанят</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="input-group">
+              <input type="date" [(ngModel)]="employeePosition.dateOfDismissal" class="form-control">
+            </div>
+          </div>
+          <div class="col">
+            <label>Уволен</label>
           </div>
         </div>
       </div>
@@ -27,3 +73,5 @@
     </div>
   </div>
 </div>
+
+

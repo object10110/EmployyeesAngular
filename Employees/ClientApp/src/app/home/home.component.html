@@ -1,9 +1,17 @@
     <!-- container -->
 <div class="container">
   <!-- row -->
+  <div class="row justify-content-between">
+    <div class="col-md-auto">
+      <add-employee-position-component [positions]="positions" ></add-employee-position-component>
+    </div>
+    <div class="col-md-auto">
+      <add-position-component (onPositionCreated)="onPositionCreated($event)"></add-position-component>
+    </div>
+  </div>
+  <!-- row -->
   <div class="row">
-    <div class="col-md-3">
-      <add-position-component></add-position-component>
+    <div class="col-md-auto">
     </div>
   </div>
 </div>

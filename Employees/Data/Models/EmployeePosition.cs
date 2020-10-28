@@ -12,6 +12,7 @@ namespace Employees.Data.Models
         public int? PositionId { get; set; }
         public Position Position { get; set; }
 
+        public decimal Salary { get; set; }
         public DateTime DateOfAppointment { get; set; }
         public DateTime? DateOfDismissal { get; set; }
     }

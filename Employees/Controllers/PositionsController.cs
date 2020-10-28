@@ -2,15 +2,15 @@
 using Employees.Data.Models;
 using Employees.ModelsDTO;
 using Employees.Repositories;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Employees.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PositionsController
+    public class PositionsController: ControllerBase
     {
         private readonly IMapper _mapper;
         private readonly PositionRepository _positionRepository;
@@ -21,9 +21,15 @@ namespace Employees.Controllers
         }
 
         [HttpGet]
-        public bool Get()
+        public async Task<IEnumerable<PositionDTO>> Get()
         {
-            return true;
+            var positionDtoList = new List<PositionDTO>();
+            var positionList = await _positionRepository.GetAll();
+            foreach (var position in positionList)
+            {
+                positionDtoList.Add(_mapper.Map<PositionDTO>(position));
+            }
+            return positionDtoList;
         }
 
         // POST api/positions
@@ -41,6 +47,7 @@ namespace Employees.Controllers
                 }
                 catch { };
             }
+            Response.StatusCode = 400;
             return null;
         }
     }

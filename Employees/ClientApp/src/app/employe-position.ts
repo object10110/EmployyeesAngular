@@ -1,7 +1,11 @@
 export class EmployeePosition {
+  id: number;
+  employeeId: number;
   name: string;
   surname: string;
   positionId: number;
-  dateOfAppointment: string;
-  dateOfDismissal: string;
+  positionName: string;
+  salary: number;
+  dateOfAppointment: Date;
+  dateOfDismissal: Date;
 }
