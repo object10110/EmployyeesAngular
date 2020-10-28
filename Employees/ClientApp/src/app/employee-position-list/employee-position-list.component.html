@@ -1,0 +1,22 @@
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Должность</th>
+      <th scope="col">Сотрудник</th>
+      <th scope="col">Оклад</th>
+      <th scope="col">Дата назначения</th>
+      <th scope="col">Дата увольнения</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let ep of employeePositions">
+      <td>{{ ep.id }}</td>
+      <td data-id="{{ ep.positionId }}">{{ ep.positionName }}</td>
+      <td>{{ ep.surname }} {{ ep.name }}</td>
+      <td>{{ ep.salary }}$</td>
+      <td>{{ ep.dateOfAppointment }}</td>
+      <td>{{ ep.dateOfDismissal }}</td>
+    </tr>
+  </tbody>
+</table>

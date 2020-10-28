@@ -37,6 +37,7 @@
     <None Remove="ClientApp\src\app\add-employee-position\add-employee-position.component.ts" />
     <None Remove="ClientApp\src\app\add-position\add-position.component.ts" />
     <None Remove="ClientApp\src\app\employe-position.ts" />
+    <None Remove="ClientApp\src\app\employee-position-list\employee-position-list.component.ts" />
     <None Remove="ClientApp\src\app\position.ts" />
   </ItemGroup>
 
@@ -44,6 +45,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\add-employee-position\add-employee-position.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\add-position\add-position.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\employe-position.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\employee-position-list\employee-position-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\position.ts" />
   </ItemGroup>
 

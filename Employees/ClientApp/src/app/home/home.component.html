@@ -3,7 +3,7 @@
   <!-- row -->
   <div class="row justify-content-between">
     <div class="col-md-auto">
-      <add-employee-position-component [positions]="positions" ></add-employee-position-component>
+      <add-employee-position-component [positions]="positions"></add-employee-position-component>
     </div>
     <div class="col-md-auto">
       <add-position-component (onPositionCreated)="onPositionCreated($event)"></add-position-component>
@@ -11,7 +11,8 @@
   </div>
   <!-- row -->
   <div class="row">
-    <div class="col-md-auto">
+    <div class="col-md-12">
+      <employee-position-list [employeePositions]="employeePositions"></employee-position-list>
     </div>
   </div>
 </div>

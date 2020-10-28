@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Employees.Data.Models;
@@ -30,9 +28,15 @@ namespace Employees.Controllers
 
         // GET: api/EmployeePositions
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EmployeePosition>>> Get()
+        public async Task<ActionResult<IEnumerable<EmployeePositionDTO>>> Get()
         {
-            return await _employeePositionsRepository.GetAll();
+            var epDtoList = new List<EmployeePositionDTO>();
+            var epList = await _employeePositionsRepository.GetAll();
+            foreach (var ep in epList)
+            {
+                epDtoList.Add(_mapper.Map<EmployeePositionDTO>(ep));
+            }
+            return epDtoList;
         }
 
         // POST: api/EmployeePositions
