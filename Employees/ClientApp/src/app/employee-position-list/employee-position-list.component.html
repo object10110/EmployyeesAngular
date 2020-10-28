@@ -22,10 +22,10 @@
 </table>
 <!-- row -->
 <div class="row">
-  <div class="col right">
-    <button [disabled]="employeePositionPaginationList.hasNext" (click)="previousPage()"><</button>
+  <div class="col right" >
+    <input type="button" (click)="previousPage()" value="<" *ngIf="employeePositionPaginationList.hasPrevious"/>
   </div>
-  <div class="col">
-    <button [disabled]="employeePositionPaginationList.hasPrevious" (click)="nextPage()">></button>
+  <div class="col" >
+    <input type="button" (click)="nextPage()" value=">" *ngIf="employeePositionPaginationList.hasNext"/>
   </div>
 </div>

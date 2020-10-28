@@ -12,6 +12,7 @@ export class AddEmployeePositionComponent {
   @ViewChild('closeAddEmployeePositionButton', { static: false })
   closebutton: ElementRef;
 
+  errMessage: string;
   employeePosition: EmployeePosition = new EmployeePosition();
   baseUrl: string;
   @Input() positions: Position[];
@@ -24,11 +25,23 @@ export class AddEmployeePositionComponent {
 
   addEmployeePosition(): void {
     console.log(this.employeePosition);
-    this.http.post<EmployeePosition>(this.baseUrl + "api/employeepositions", this.employeePosition).subscribe(result => {
-      this.onEmployeePositionCreated.emit(result);
-      this.closebutton.nativeElement.click();
-      this.employeePosition = new EmployeePosition();
-      this.employeePosition.salary = 0;
-    }, error => console.error(error));
+    this.errMessage = this.getError();
+    if (this.errMessage == "") {
+      this.http.post<EmployeePosition>(this.baseUrl + "api/employeepositions", this.employeePosition).subscribe(result => {
+        this.onEmployeePositionCreated.emit(result);
+        this.closebutton.nativeElement.click();
+        this.employeePosition = new EmployeePosition();
+        this.employeePosition.salary = 0;
+      }, error => console.error(error));
+    }
+  }
+
+  getError(): string {
+    if (!(this.employeePosition.surname) || this.employeePosition.surname.length <= 0) return "Заполните поле Фамилия";
+    if (!(this.employeePosition.name) || this.employeePosition.name.length <= 0) return "Заполните поле Имя";
+    if (!(this.employeePosition.positionId) || this.employeePosition.positionId <= 0) return "Выберите должность";
+    if (!(this.employeePosition.salary) || this.employeePosition.salary <= 0) return "Оклад должен быть больше 0";
+    if (!this.employeePosition.dateOfAppointment) return "Укажите дату найма";
+    return "";
   }
 }
