@@ -5,6 +5,7 @@ import { Position } from "../position";
 @Component ({
   selector: 'add-position-component',
   templateUrl: './add-position.component.html',
+  styleUrls: ['./add-position.component.css']
 })
 export class AddPositionComponent {
 
@@ -24,8 +25,8 @@ export class AddPositionComponent {
     this.http.post<Position>(this.baseUrl + "api/positions", this.position).subscribe(result => {
       console.log(result);
       this.onPositionCreated.emit(result);
+      this.closebutton.nativeElement.click();
+      this.position.name = "";
     }, error => console.error(error));
-    this.closebutton.nativeElement.click();
-    this.position.name = "";
   }
 }

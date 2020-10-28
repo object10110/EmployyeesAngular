@@ -1,2 +1,20 @@
-﻿body {
+.table {
+  color: #212529;
+  border: 2px solid #949494;
+}
+thead {
+  background-color: #afafaf;
+  border-bottom: 3px solid #949494;
+}
+th {
+  text-align: center;
+}
+tbody {
+  background-color: #f3f3f3;
+}
+tr {
+  border-bottom: 2px solid #949494;
+}
+td {
+  text-align: center;
 }

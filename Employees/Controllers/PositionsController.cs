@@ -36,7 +36,7 @@ namespace Employees.Controllers
         [HttpPost]
         public async Task<PositionDTO> Post(PositionDTO position)
         {
-            if (position != null)
+            if (position != null && !string.IsNullOrWhiteSpace(position.Name))
             {
                 try
                 {

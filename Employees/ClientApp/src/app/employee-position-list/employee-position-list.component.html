@@ -1,5 +1,5 @@
 <table class="table">
-  <thead class="thead-light">
+  <thead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">Должность</th>
@@ -15,8 +15,8 @@
       <td data-id="{{ ep.positionId }}">{{ ep.positionName }}</td>
       <td>{{ ep.surname }} {{ ep.name }}</td>
       <td>{{ ep.salary }}$</td>
-      <td>{{ ep.dateOfAppointment }}</td>
-      <td>{{ ep.dateOfDismissal }}</td>
+      <td>{{ ep.dateOfAppointment | date:"dd/MM/yyyy"}}</td>
+      <td>{{ ep.dateOfDismissal | date:"dd/MM/yyyy"}}</td>
     </tr>
   </tbody>
 </table>
