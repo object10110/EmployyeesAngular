@@ -1,4 +1,6 @@
-﻿using Employees.Data.Models;
+﻿using AutoMapper;
+using Employees.Data.Models;
+using Employees.ModelsDTO;
 using Employees.Repositories;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -8,25 +10,38 @@ namespace Employees.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [EnableCors("AllowAllOrigin")]
     public class PositionsController
     {
+        private readonly IMapper _mapper;
         private readonly PositionRepository _positionRepository;
-        public PositionsController(PositionRepository positionRepository)
+        public PositionsController(IMapper mapper, PositionRepository positionRepository)
         {
+            _mapper = mapper;
             _positionRepository = positionRepository;
+        }
+
+        [HttpGet]
+        public bool Get()
+        {
+            return true;
         }
 
         // POST api/positions
         [HttpPost]
-        public async Task<IActionResult> Post(Position position)
+        public async Task<PositionDTO> Post(PositionDTO position)
         {
-            if (position == null)
+            if (position != null)
             {
-                return new BadRequestResult();
+                try
+                {
+                    var newPosition = _mapper.Map<Position>(position);
+                    newPosition = await _positionRepository.Add(newPosition);
+                    position = _mapper.Map<PositionDTO>(newPosition);
+                    return position;
+                }
+                catch { };
             }
-            position = await _positionRepository.Add(position);
-            return new OkObjectResult(position);
+            return null;
         }
     }
 }

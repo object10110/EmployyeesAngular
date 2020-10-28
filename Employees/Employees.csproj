@@ -13,6 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
@@ -33,12 +34,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\add-employee-position\add-employee-position.component.ts" />
     <None Remove="ClientApp\src\app\add-position\add-position.component.ts" />
+    <None Remove="ClientApp\src\app\employe-position.ts" />
     <None Remove="ClientApp\src\app\position.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\add-employee-position\add-employee-position.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\add-position\add-position.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\employe-position.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\position.ts" />
   </ItemGroup>
 
@@ -69,5 +74,7 @@
       </ResolvedFileToPublish>
     </ItemGroup>
   </Target>
+
+  <ProjectExtensions><VisualStudio><UserProperties clientapp_4tslint_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>
