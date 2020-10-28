@@ -13,7 +13,10 @@
   <!-- row -->
   <div class="row">
     <div class="col-md-12">
-      <employee-position-list [employeePositions]="employeePositions"></employee-position-list>
+      <employee-position-list [employeePositionPaginationList]="employeePositionPaginationList"
+                              (onNextPage)="onNextPage($event)"
+                              (onPreviousPage)="onPreviousPage($event)">
+      </employee-position-list>
     </div>
   </div>
 </div>

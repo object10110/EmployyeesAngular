@@ -5,6 +5,7 @@ using Employees.Data.Models;
 using Employees.Repositories;
 using Employees.ModelsDTO;
 using AutoMapper;
+using System;
 
 namespace Employees.Controllers
 {
@@ -12,6 +13,7 @@ namespace Employees.Controllers
     [ApiController]
     public class EmployeePositionsController : ControllerBase
     {
+        private readonly int PAGE_SIZE = 5;
         private readonly IMapper _mapper;
         private readonly EmployeePositionsRepository _employeePositionsRepository;
         private readonly PositionRepository _positionRepository;
@@ -27,16 +29,32 @@ namespace Employees.Controllers
         }
 
         // GET: api/EmployeePositions
+        [Route("[action]/{page?}")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EmployeePositionDTO>>> Get()
+        public async Task<ActionResult<EmployeePositionPaginationList>> GetByPage(int page = 1)
         {
+
+            var model = new EmployeePositionPaginationList();
             var epDtoList = new List<EmployeePositionDTO>();
-            var epList = await _employeePositionsRepository.GetAll();
+            var epList = await _employeePositionsRepository.GetAll(page, PAGE_SIZE);
+
             foreach (var ep in epList)
             {
                 epDtoList.Add(_mapper.Map<EmployeePositionDTO>(ep));
             }
-            return epDtoList;
+
+            var countProducts = await _employeePositionsRepository.Count();
+            var totalPages = (int)Math.Ceiling(countProducts / (double)PAGE_SIZE);
+
+            if (page < 1) page = 1;
+            if (page > totalPages) page = totalPages;
+
+            model.EmployeePositions = epDtoList;
+            model.CurrentPage = page;
+            model.HasPrevious = page > 1;
+            model.HasNext = totalPages > page;
+
+            return model;
         }
 
         // POST: api/EmployeePositions

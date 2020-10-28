@@ -1,5 +1,5 @@
-import { Component, Input } from "@angular/core";
-import { EmployeePosition } from "../employe-position";
+import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { EmployeePositionPaginationList } from "../employee-position-pagination-list";
 
 @Component({
   selector: 'employee-position-list',
@@ -7,5 +7,15 @@ import { EmployeePosition } from "../employe-position";
   styleUrls: ['./employee-position-list.component.css']
 })
 export class EmployeePositionList {
-  @Input() employeePositions: EmployeePosition[] = [];
+  @Input() employeePositionPaginationList: EmployeePositionPaginationList
+  @Output() onNextPage = new EventEmitter();
+  @Output() onPreviousPage = new EventEmitter();
+
+  nextPage(): void {
+    this.onNextPage.emit();
+  }
+
+  previousPage(): void {
+    this.onPreviousPage.emit();
+  }
 }

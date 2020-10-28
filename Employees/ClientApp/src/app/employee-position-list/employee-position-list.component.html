@@ -10,7 +10,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let ep of employeePositions">
+    <tr *ngFor="let ep of employeePositionPaginationList.employeePositions">
       <td>{{ ep.id }}</td>
       <td data-id="{{ ep.positionId }}">{{ ep.positionName }}</td>
       <td>{{ ep.surname }} {{ ep.name }}</td>
@@ -20,3 +20,12 @@
     </tr>
   </tbody>
 </table>
+<!-- row -->
+<div class="row">
+  <div class="col right">
+    <button [disabled]="employeePositionPaginationList.hasNext" (click)="previousPage()"><</button>
+  </div>
+  <div class="col">
+    <button [disabled]="employeePositionPaginationList.hasPrevious" (click)="nextPage()">></button>
+  </div>
+</div>
