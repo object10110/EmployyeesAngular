@@ -28,7 +28,7 @@ namespace Employees.Controllers
             _employeesRepository = employeesRepository;
         }
 
-        // GET: api/EmployeePositions
+        // GET: api/EmployeePositions/GetByPage/{1}
         [Route("[action]/{page?}")]
         [HttpGet]
         public async Task<ActionResult<EmployeePositionPaginationList>> GetByPage(int page = 1)
@@ -100,8 +100,14 @@ namespace Employees.Controllers
 
         private bool IsValid(EmployeePositionDTO ep)
         {
-            return ep.PositionId > 0 && ep.DateOfAppointment.HasValue && ep.Salary > 0
-                    && !string.IsNullOrWhiteSpace(ep.Name) && !string.IsNullOrWhiteSpace(ep.Surname);
+            return ep.PositionId > 0
+                    && ep.DateOfAppointment.HasValue
+                    && ep.Salary > 0
+                    && !string.IsNullOrWhiteSpace(ep.Name)
+                    && !string.IsNullOrWhiteSpace(ep.Surname)
+                    && (!ep.DateOfDismissal.HasValue ||
+                        ep.DateOfDismissal.HasValue && ep.DateOfAppointment.HasValue
+                        && ep.DateOfDismissal.Value >= ep.DateOfAppointment.Value);
         }
     }
 }

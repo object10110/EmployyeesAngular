@@ -42,6 +42,9 @@ export class AddEmployeePositionComponent {
     if (!(this.employeePosition.positionId) || this.employeePosition.positionId <= 0) return "Выберите должность";
     if (!(this.employeePosition.salary) || this.employeePosition.salary <= 0) return "Оклад должен быть больше 0";
     if (!this.employeePosition.dateOfAppointment) return "Укажите дату найма";
+    if (this.employeePosition.dateOfAppointment && this.employeePosition.dateOfDismissal
+        && this.employeePosition.dateOfAppointment > this.employeePosition.dateOfDismissal)
+      return "Дата назначения не может быть позже даты увольнения";
     return "";
   }
 }
